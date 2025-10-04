@@ -7,5 +7,5 @@
 }
 
 .boton-verde {
-    @include boton($verde, block);
+    @include boton($verde, inline-block);
 }
