@@ -1,8 +1,20 @@
 <?php
 
+//importar la BD
+require '../includes/config/database.php';
+$db = conectarDB();
+
+//Query de propiedades
+$query = "SELECT * FROM propiedad";
+
+//realizar la consulta a la BD
+$resultadoConsulta = mysqli_query($db, $query);
+
+//muestra mensajes 
 $resultado = $_GET['resultado'] ?? null;
 require '../includes/funciones.php';
 
+//incluir el tamplate del header
 incluirTemplate('header');
 ?>
 
@@ -27,20 +39,27 @@ incluirTemplate('header');
         </thead>
 
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Casa en la playa</td>
-                <td> <img src="/imagenes/35b83da34ba84ae4b34ca465edf2d093.jpg" class="imagen-tabla"> </td>
-                <td>Q1,000,000.00</td>
-                <td>
-                    <a href="#" class="boton-rojo">Eliminar</a>
-                    <a href="#" class="boton-amarillo">Actualizar</a>
-                </td>
-            </tr>
+            <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)): ?>
+                <tr>
+                    <td><?php echo $propiedad['id']; ?></td>
+                    <td><?php echo $propiedad['titulo']; ?></td>
+                    <td> <img src="/imagenes/<?php echo $propiedad['imagen']; ?>" class="imagen-tabla"> </td>
+                    <td>Q <?php echo $propiedad['precio']; ?></td>
+                    <td>
+                        <a href="#" class="boton-rojo">Eliminar</a>
+                        <a href="admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>"
+                            class="boton-amarillo">Actualizar</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
 </main>
 
 <?php
+
+//cerrar la conexion
+mysqli_close($db);
+
 incluirTemplate('footer');
 ?>
