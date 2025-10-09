@@ -76,10 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "Elige un vendedor";
     }
 
-    if (!$imagen['name'] || $imagen['error']) {
-        $errores[] = 'La imagen es obligatoria';
-    }
-
     //validar tamaño de la imagen
     $medida = 1000 * 1000;
 
@@ -96,19 +92,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mkdir($carpetaImagenes);
         }
 
-        //generar nombre unico a la imagen
-        $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+        $nombreImagen = '';
 
-        //subir la imagen
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        //eliminar imagen
+        if ($imagen['name']) {
+            unlink($carpetaImagenes . $propiedad['imagen']);
+
+            //generar nombre unico a la imagen
+            $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+
+            //subir la imagen
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        } else {
+            $nombreImagen = $propiedad['imagen'];
+        }
 
 
-        $query = "INSERT INTO propiedad (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedor_id) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedor_id')";
+        $query = "UPDATE propiedad SET titulo = '{$titulo}', precio = '{$precio}', imagen = '{$nombreImagen}', descripcion = '{$descripcion}', habitaciones = {$habitaciones}, wc = {$wc}, estacionamiento = {$estacionamiento}, vendedor_id = {$vendedor_id} WHERE id = {$id}";
 
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
-            header('Location: /admin?resultado=1');
+            header('Location: /admin?resultado=2');
         }
     }
 }
@@ -127,7 +132,7 @@ incluirTemplate('header');
         </div>
     <?php endforeach; ?>
 
-    <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General</legend>
 

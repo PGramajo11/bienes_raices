@@ -32,6 +32,11 @@
                 </div>
             </div> <!--Fin barra-->
 
+            <?php
+            if ($inicio) {
+                echo "<h1> Venta de Casas y Departamentos en Guatemala</h1>";
+            }
+            ?>
 
         </div>
     </header>
