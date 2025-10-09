@@ -1,5 +1,12 @@
 <?php
 
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if (!$auth) {
+    header('Location: /');
+}
+
 //validar el id
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -8,9 +15,7 @@ if (!$id) {
     header('Location: /admin');
 }
 
-require '../../includes/funciones.php';
 require '../../includes/config/database.php';
-
 $db = conectarDB();
 
 //obtener los datos de la propiedad

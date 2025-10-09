@@ -1,6 +1,6 @@
 <?php
 
-require 'include/config/database.php';
+require 'includes/config/database.php';
 $db = conectarDB();
 
 //Autenticar
@@ -31,6 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth = password_verify($password, $usuario['password']);
 
             if ($auth) {
+                //el usuario esta autenticado
+                session_start();
+
+                $_SESSION['usuario'] = $usuario['email'];
+                $_SESSION['login'] = true;
+
+                header('Location: /admin');
 
             } else {
                 $errores[] = 'La contraseña es incorrecta';
