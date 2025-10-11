@@ -1,0 +1,17 @@
+{
+    "name": "pgram/bienesraices",
+    "description": "Agregando POO al codigo",
+    "type": "project",
+    "authors": [
+        {
+            "name": "PABLO GRAMAJO",
+            "email": "pgramajox@miumg.edu.gt"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "./classes"
+        }
+    }
+}

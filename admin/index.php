@@ -1,15 +1,10 @@
 <?php
 
 //autenticar usuario
-require '../includes/funciones.php';
-$auth = estaAutenticado();
-
-if (!$auth) {
-    header('Location: /');
-}
+require '../includes/app.php';
+estaAutenticado();
 
 //importar la BD
-require '../includes/config/database.php';
 $db = conectarDB();
 
 //Query de propiedades

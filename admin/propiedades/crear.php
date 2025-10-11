@@ -1,15 +1,12 @@
 <?php
 
-require '../../includes/funciones.php';
+require '../../includes/app.php';
+
+use App\Propiedad;
 
 //autenticar usuario
-$auth = estaAutenticado();
+estaAutenticado();
 
-if (!$auth) {
-    header('Location: /');
-}
-
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 //consultar los vendedores
@@ -29,6 +26,11 @@ $errores = [];
 
 //ejecutar el código despues que el usaurio envia el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $propiedad = new Propiedad($_POST);
+    $propiedad->guardar();
+
+    debug($propiedad);
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
     $precio = mysqli_real_escape_string($db, $_POST['precio']);
