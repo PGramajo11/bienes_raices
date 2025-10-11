@@ -2,6 +2,7 @@
 
 define('TEMPLATES_URL', __DIR__ . '/templates');
 define('FUNCIONES_URL', __DIR__ . 'funiones.php');
+define('CARPETA_IMAGENES', __DIR__ . '/../imagenes/');
 
 function incluirTemplate(string $nombre, bool $inicio = false)
 {

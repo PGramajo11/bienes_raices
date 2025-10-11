@@ -9,6 +9,9 @@ class Propiedad
 
     protected static $columnasDB = ['id', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'estacionamiento', 'creado', 'vendedor_id'];
 
+    //errores de validacion
+    protected static $errores = [];
+
     public $id;
     public $titulo;
     public $precio;
@@ -32,7 +35,7 @@ class Propiedad
         $this->id = $args['id'] ?? '';
         $this->titulo = $args['titulo'] ?? '';
         $this->precio = $args['precio'] ?? '';
-        $this->imagen = $args['imagen'] ?? 'imagen.jpg';
+        $this->imagen = $args['imagen'] ?? '';
         $this->descripcion = $args['descripcion'] ?? '';
         $this->habitaciones = $args['habitaciones'] ?? '';
         $this->wc = $args['wc'] ?? '';
@@ -47,12 +50,14 @@ class Propiedad
         $atributos = $this->sanitizarAtributos();
         //debug($atributos);
 
-        $query = "INSERT INTO propiedad (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedor_id) VALUES ('$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamiento', '$this->creado', '$this->vendedor_id')";
+        $query = " INSERT INTO propiedad ( ";
+        $query .= join(', ', array_keys($atributos));
+        $query .= " ) VALUES (' ";
+        $query .= join("', '", array_values($atributos));
+        $query .= " ') ";
 
         $resultado = self::$db->query($query);
 
-
-        debug($resultado);
 
     }
 
@@ -78,6 +83,55 @@ class Propiedad
         }
 
         return $sanitizado;
+    }
+
+    public static function getErrores()
+    {
+        return self::$errores;
+    }
+
+    public function validar()
+    {
+        if (!$this->titulo) {
+            self::$errores[] = "Debes añadir un titulo";
+        }
+
+        if (!$this->precio) {
+            self::$errores[] = "Debes añadir un precio";
+        }
+
+        if (strlen($this->descripcion) < 50) {
+            self::$errores[] = "La descripción es obligatoria y debe tener al menos 50 caracteres";
+        }
+
+        if (!$this->habitaciones) {
+            self::$errores[] = "El numero de habitaciones es obligatorio";
+        }
+
+        if (!$this->wc) {
+            self::$errores[] = "El numero de baños es obligatorio";
+        }
+
+        if (!$this->estacionamiento) {
+            self::$errores[] = "El numero de estacionamientos es obligatorio";
+        }
+
+        if (!$this->vendedor_id) {
+            self::$errores[] = "Elige un vendedor";
+        }
+
+        if (!$this->imagen) {
+            self::$errores[] = 'La imagen es obligatoria';
+        }
+
+        return self::$errores;
+    }
+
+    public function setImagen($imagen)
+    {
+        if ($imagen) {
+            $this->imagen = $imagen;
+        }
     }
 
 }
