@@ -26,3 +26,10 @@ function debug($variable)
     echo "</pre>";
     exit;
 }
+
+//limpiar el html
+function s($html): string
+{
+    $s = htmlspecialchars($html);
+    return $s;
+}
