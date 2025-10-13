@@ -21,23 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id) {
 
+        $propiedad = Propiedad::find($id);
 
-        //eliminar el archivo
-        $query = "SELECT imagen FROM propiedad WHERE id = {$id}";
+        $propiedad->eliminar();
 
-        $resultado = mysqli_query($db, $query);
-        $propiedad = mysqli_fetch_assoc($resultado);
-
-        unlink('../imagenes/' . $propiedad['imagen']);
-
-
-        //eliminar propiedad
-        $query = "DELETE FROM propiedad WHERE id = {$id}";
-        $resultado = mysqli_query($db, $query);
-
-        if ($resultado) {
-            header('location: /admin?resultado=3');
-        }
     }
 }
 

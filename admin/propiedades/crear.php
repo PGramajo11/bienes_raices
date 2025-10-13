@@ -39,11 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $imagen->save(CARPETA_IMAGENES . $nombreImagen);
         }
 
-        $ok = $propiedad->guardar(); // ¡NO pises $resultado de vendedores!
-        if ($ok) {
-            header('Location: /admin?resultado=1');
-            exit;
-        }
+        $propiedad->guardar();
+
     }
 }
 
