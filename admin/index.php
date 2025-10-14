@@ -43,13 +43,11 @@ incluirTemplate('header');
 <main class="contenedor seccion">
     <h1>Administrador</h1>
 
-    <?php if (intval($resultado) === 1): ?>
-        <p class="alerta exito">Anuncio Creado Correctamente</p>
-    <?php elseif (intval($resultado) === 2): ?>
-        <p class="alerta exito">Anuncio Actualizado Correctamente</p>
-    <?php elseif (intval($resultado) === 3): ?>
-        <p class="alerta exito">Anuncio Eliminado Correctamente</p>
-    <?php endif; ?>
+    <?php
+    $mensaje = mostrarNotificacion(intval($resultado));
+    if ($mensaje) { ?>
+        <p class="alerta exito"><?php echo $mensaje ?> </p>
+    <?php } ?>
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
     <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Crear Vendedor</a>
@@ -111,12 +109,12 @@ incluirTemplate('header');
                     <td>
                         <form method="POST" class="w-100">
 
-                            <input type="hidden" name="id" value="<?php echo $propieda->id; ?>">
+                            <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
                             <input type="hidden" name="tipo" value="vendedor">
                             <input type="submit" class="boton-rojo-block" value="Eliminar">
                         </form>
 
-                        <a href="admin/vendedores/actualizar.php?id=<?php echo $propieda->id; ?>"
+                        <a href="admin/vendedores/actualizar.php?id=<?php echo $vendedor->id; ?>"
                             class="boton-amarillo-block">Actualizar</a>
                     </td>
                 </tr>

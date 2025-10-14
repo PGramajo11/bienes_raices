@@ -70,4 +70,5 @@ class Propiedad extends Principal
 
         return self::$errores;
     }
+
 }
