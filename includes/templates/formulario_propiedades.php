@@ -41,14 +41,14 @@
 <fieldset>
     <legend>Vendedor</legend>
 
-    <select name="vendedor_id" id="vendedor_id">
-        <option value="">-- Seleccionar Vendedor --</option>
-        <?php if (!empty($vendedores)): ?>
-            <?php foreach ($vendedores as $v): ?>
-                <option value="<?php echo (int) $v['id']; ?>" <?php echo ((string) $propiedad->vendedor_id === (string) $v['id']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($v['nombre'] . ' ' . $v['apellido'], ENT_QUOTES, 'UTF-8'); ?>
-                </option>
-            <?php endforeach; ?>
-        <?php endif; ?>
+    <label for="vendedor_id">Vendedor:</label>
+    <select name="propiedad[vendedor_id]" id="vendedor_id">
+        <option selected value="">-- Seleccione -- </option>
+        <?php foreach ($vendedores as $vendedor) { ?>
+            <option <?php echo $propiedad->vendedor_id === $vendedor->id ? 'selected' : ''; ?>
+                value="<?php echo htmlspecialchars($vendedor->id ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                <?php echo htmlspecialchars($vendedor->nombre ?? '', ENT_QUOTES, 'UTF-8') . " " . s($vendedor->apellido); ?>
+            </option>
+        <?php } ?>
     </select>
 </fieldset>

@@ -5,12 +5,14 @@ require '../includes/app.php';
 estaAutenticado();
 
 use App\Propiedad;
+use App\Vendedor;
 
 //importar la BD
-$db = conectarDB();
+//$db = conectarDB();
 
 //implementar metodo para obtener las propiedades
 $propiedades = Propiedad::all();
+$vendedores = Vendedor::all();
 
 //muestra mensajes 
 $resultado = $_GET['resultado'] ?? null;

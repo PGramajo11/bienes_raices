@@ -2,20 +2,18 @@
 require '../../includes/app.php';
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager as Image;
 
 estaAutenticado();
 
-$db = conectarDB();
+//consultar los vendedores
+$vendedores = Vendedor::all();
 
 // 1) Instancia para GET (¡no comentarlo!)
 $propiedad = new Propiedad();
 
-// 2) Traer vendedores a un array independiente
-$consulta = "SELECT id, nombre, apellido FROM vendedor";
-$resVendedores = mysqli_query($db, $consulta);
-$vendedores = $resVendedores ? mysqli_fetch_all($resVendedores, MYSQLI_ASSOC) : [];
 
 $errores = Propiedad::getErrores();
 
