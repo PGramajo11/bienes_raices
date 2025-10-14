@@ -33,3 +33,10 @@ function s($html): string
     $s = htmlspecialchars($html);
     return $s;
 }
+
+function validarContenido($tipo)
+{
+    $tipos = ['vendedor', 'propiedad'];
+
+    return in_array($tipo, $tipos);
+}
