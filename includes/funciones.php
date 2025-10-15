@@ -2,7 +2,7 @@
 
 define('TEMPLATES_URL', __DIR__ . '/templates');
 define('FUNCIONES_URL', __DIR__ . 'funiones.php');
-define('CARPETA_IMAGENES', __DIR__ . '/../imagenes/');
+define('CARPETA_IMAGENES', $_SERVER['DOCUMENT_ROOT'] . '/imagenes/');
 
 function incluirTemplate(string $nombre, bool $inicio = false)
 {
@@ -62,4 +62,17 @@ function mostrarNotificacion($codigo)
     }
 
     return $mensaje;
+}
+
+function validarORedireccionar(string $url)
+{
+    //validar el id
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if (!$id) {
+        header("Location: {$url}");
+    }
+
+    return $id;
 }

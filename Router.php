@@ -12,6 +12,11 @@ class Router
         $this->rutasGET[$url] = $fn;
     }
 
+    public function post($url, $fn)
+    {
+        $this->rutasPOST[$url] = $fn;
+    }
+
     public function comprobarRutas()
     {
         $urlActual = $_SERVER['PATH_INFO'] ?? '/';
@@ -19,10 +24,13 @@ class Router
 
         if ($metodo === 'GET') {
             $fn = $this->rutasGET[$urlActual] ?? null;
+        } else {
+            $fn = $this->rutasPOST[$urlActual] ?? null;
         }
 
-        if ($fn) {
 
+        if ($fn) {
+            //Define si la url existe y si hay una función asociada
             call_user_func($fn, $this);
         } else {
             echo "Pagina no existe";
@@ -30,13 +38,16 @@ class Router
     }
 
     //Muestra una vista
-    public function render($view)
+    public function render($view, $datos = [])
     {
-        ob_start();
+        foreach ($datos as $key => $value) {
+            $$key = $value;
+        }
+
+        ob_start(); //almacenamiento en memoria durante un momento
+
         include __DIR__ . "/views/$view.php";
-
         $contenido = ob_get_clean();
-
         include __DIR__ . "/views/layout.php";
     }
 }
