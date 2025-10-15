@@ -7,6 +7,6 @@ require __DIR__ . '/../vendor/autoload.php';
 //Conectar a la bd
 $db = conectarDB();
 
-use App\Principal;
+use Model\Principal;
 
 Principal::setDB($db);
