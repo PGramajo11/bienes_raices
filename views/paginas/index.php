@@ -32,12 +32,12 @@
     <h2>Casas y Departamentos en Venta</h2>
 
     <?php
-    $limite = 3;
-    include 'includes/templates/anuncios.php';
+
+    include 'listado.php';
     ?>
 
     <div class="alinear-derecha">
-        <a href="anuncios.php" class="boton-verde">Ver Todas</a>
+        <a href="/propiedades" class="boton-verde">Ver Todas</a>
     </div>
 </section>
 
@@ -61,7 +61,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.php">
+                <a href="/entrada">
                     <h4>Terraza en el techo de tu casa</h4>
                     <p class="informacion-meta">Escrito el: <span>10/09/2025</span> Por: <span>Admin</span></p>
 
@@ -81,7 +81,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.php">
+                <a href="/entrada">
                     <h4>Guia para la decoración de tu hogar</h4>
                     <p class="informacion-meta">Escrito el: <span>10/09/2025</span> Por: <span>Admin</span></p>
 
