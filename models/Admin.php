@@ -21,4 +21,55 @@ class Admin extends Principal
         $this->password = $args['password'] ?? '';
     }
 
+    public function validar()
+    {
+        if (!$this->email) {
+            self::$errores[] = 'El correo es obligatorio';
+        }
+
+        if (!$this->password) {
+            self::$errores[] = 'La contraseña es obligatoria';
+        }
+
+        return self::$errores;
+    }
+
+    public function existeUsuario()
+    {
+        //revisar la existencia de un usuario
+        $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
+
+        $resultado = self::$db->query($query);
+
+        if (!$resultado->num_rows) {
+            self::$errores[] = 'El usuario no existe';
+            return;
+        }
+        return $resultado;
+    }
+
+    public function comprobarPassword($resultado)
+    {
+        $usuario = $resultado->fetch_object();
+
+        $autenticado = password_verify($this->password, $usuario->password);
+
+        if (!$autenticado) {
+            self::$errores[] = 'La contraseña es incorrecta';
+        }
+
+        return $autenticado;
+    }
+
+    public function autenticar()
+    {
+        session_start();
+
+        //llenar el arreglo de sesion
+        $_SESSION['usuario'] = $this->email;
+        $_SESSION['login'] = true;
+
+        header('Location: /admin');
+    }
+
 }
